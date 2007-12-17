@@ -33,7 +33,6 @@ Buildrequires:  groff
 #Requires: ImageMagick groff gv psutils tetex-dvips tetex-latex texinfo
 Requires:	ImageMagick groff psutils
 Requires:	file binutils
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The a2ps filter converts text and other types of files to PostScript(TM).
