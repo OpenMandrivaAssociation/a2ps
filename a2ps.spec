@@ -16,6 +16,7 @@ BuildRequires:	emacs-bin
 #BuildRequires:	fetchmail
 BuildRequires:	flex
 BuildRequires:	gettext
+BuildRequires:	gperf
 BuildRequires:	mawk
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
