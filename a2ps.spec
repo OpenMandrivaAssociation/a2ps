@@ -1,18 +1,13 @@
-%define mainversion 4.13
-%define subversion b
+%define version 4.14
 
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
-Version:	%{mainversion}%{subversion}
-Release:	%mkrel 13
-License:	GPL
+Version:	%{version}
+Release:	%mkrel 1
+License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
-Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{mainversion}%{subversion}.tar.bz2
-Patch0:		a2ps-4.13-includes.patch
-Patch1:		a2ps-4.13-64bit-fixes.patch
-Patch2:		a2ps-4.13-varargs.patch
-Patch3:		a2ps-4.13-select_c-filename-shell-command-vulnerability.patch
+Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Requires(post):	info-install
 Requires(preun):info-install
 BuildRequires:	X11-devel
@@ -68,15 +63,11 @@ and medias.
 This package holds static libraries.
 
 %prep
-%setup -q -n %{name}-%{mainversion}
-%patch0 -p1 -b .includes
-%patch1 -p1 -b .64bit-fixes
-%patch2 -p1 -b .varargs
-%patch3 -p0 -b .select
+%setup -q -n %{name}-%{version}
 
 %build
 
-%configure2_5x --with-included-gettext
+%configure
 %make
 
 %install
@@ -108,7 +99,7 @@ This package holds static libraries.
 %defattr(644,root,root,755)
 %config(noreplace) %{_sysconfdir}/a2ps.cfg
 %config(noreplace) %{_sysconfdir}/a2ps-site.cfg
-%doc AUTHORS COPYING NEWS README TODO THANKS
+%doc AUTHORS NEWS README TODO THANKS
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_datadir}/%{name}/afm/make_fonts_map.sh
 %{_infodir}/a2ps.info*
