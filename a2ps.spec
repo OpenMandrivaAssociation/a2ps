@@ -3,7 +3,7 @@
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
