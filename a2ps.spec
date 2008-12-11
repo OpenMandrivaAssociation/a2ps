@@ -25,10 +25,10 @@ BuildRequires:	texinfo
 #BuildRequires:	xemacs
 BuildRequires:  psutils
 #Buildrequires:  gv
-BuildRequires:  ImageMagick
+BuildRequires:  imagemagick
 Buildrequires:  groff
-#Requires: ImageMagick groff gv psutils tetex-dvips tetex-latex texinfo
-Requires:	ImageMagick groff psutils
+#Requires: imagemagick groff gv psutils tetex-dvips tetex-latex texinfo
+Requires:	imagemagick groff psutils
 Requires:	file binutils
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
