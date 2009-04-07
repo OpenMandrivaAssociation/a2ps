@@ -9,6 +9,7 @@ Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
 Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
+Patch2:		a2ps-4.14-fix-str-fmt.patch
 Requires(post):	info-install
 Requires(preun):info-install
 BuildRequires:	X11-devel
@@ -67,10 +68,11 @@ This package holds static libraries.
 %prep
 %setup -q -n %{name}-%{version}
 %patch1 -p1 -b .enable-display
+%patch2 -p0 -b .str
 
 %build
 
-%configure
+%configure2_5x
 %make
 
 %install
