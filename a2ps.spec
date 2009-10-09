@@ -3,13 +3,17 @@
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
 Version:	%{version}
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
 Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
 Patch2:		a2ps-4.14-fix-str-fmt.patch
+Patch3:		a2ps-4.14-glibcpaper.patch
+Patch4:		a2ps-4.14-autoenc.patch
+Patch5:		a2ps-4.14-security.patch
+
 Requires(post):	info-install
 Requires(preun):info-install
 BuildRequires:	X11-devel
@@ -19,18 +23,24 @@ BuildRequires:	emacs-bin
 BuildRequires:	flex
 BuildRequires:	gettext
 BuildRequires:	gperf
+BuildRequires:	groff-perl
+BuildRequires:	html2ps
+BuildRequires:	imagemagick
 BuildRequires:	mawk
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texinfo
 #BuildRequires:	xemacs
-BuildRequires:  psutils
-#Buildrequires:  gv
-BuildRequires:  imagemagick
-Buildrequires:  groff
-#Requires: imagemagick groff gv psutils tetex-dvips tetex-latex texinfo
-Requires:	imagemagick groff psutils
-Requires:	file binutils
+BuildRequires:	psutils
+#Buildrequires:	gv
+
+Requires:	binutils
+Requires:	file
+Requires:	groff-perl
+Requires:	imagemagick 
+Requires:	psutils
+
+#Requires:	gv
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -54,8 +64,8 @@ This package holds include files.
 
 %package static-devel
 Summary:	Static libraries for %{name}
-Group:          Development/Other
-Requires(pre):  %{name}-devel = %{version}-%{release}
+Group:		Development/Other
+Requires(pre):	%{name}-devel = %{version}-%{release}
 
 %description static-devel
 The a2ps filter converts text and other types of files to PostScript(TM).
@@ -69,6 +79,14 @@ This package holds static libraries.
 %setup -q -n %{name}-%{version}
 %patch1 -p1 -b .enable-display
 %patch2 -p0 -b .str
+
+# Ensure the paper size is properly modified upon locale (from fedora)
+%patch3 -p1
+# Ensute the encoding is not hardcoded but deduced from environment (from fedora)
+%patch4 -p1
+
+# Security enhancement (from fedora)
+%patch5 -p1
 
 %build
 
@@ -134,5 +152,3 @@ This package holds static libraries.
 %files static-devel
 %defattr(644,root,root,755)
 %{_libdir}/*.a
-
-
