@@ -3,7 +3,7 @@
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
 Version:	%{version}
-Release:	%mkrel 5
+Release:	%mkrel 6
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
@@ -83,7 +83,7 @@ This package holds static libraries.
 # Ensure the paper size is properly modified upon locale (from fedora)
 %patch3 -p1
 # Ensute the encoding is not hardcoded but deduced from environment (from fedora)
-%patch4 -p1
+# %patch4 -p1
 
 # Security enhancement (from fedora)
 %patch5 -p1
