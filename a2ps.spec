@@ -16,7 +16,6 @@ Patch5:		a2ps-4.14-security.patch
 
 Requires(post):	info-install
 Requires(preun):info-install
-BuildRequires:	X11-devel
 BuildRequires:	bison
 BuildRequires:	emacs-bin
 #BuildRequires:	fetchmail
