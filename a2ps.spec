@@ -1,9 +1,7 @@
-%define version 4.14
-
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
-Version:	%{version}
-Release:	%mkrel 11
+Version:	4.14
+Release:	%mkrel 12
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
@@ -11,14 +9,10 @@ Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
 Patch2:		a2ps-4.14-fix-str-fmt.patch
 Patch3:		a2ps-4.14-glibcpaper.patch
-Patch4:		a2ps-4.14-autoenc.patch
 Patch5:		a2ps-4.14-security.patch
 
-Requires(post):	info-install
-Requires(preun):info-install
 BuildRequires:	bison
 BuildRequires:	emacs-bin
-#BuildRequires:	fetchmail
 BuildRequires:	flex
 BuildRequires:	gettext
 BuildRequires:	gperf
@@ -29,18 +23,13 @@ BuildRequires:	mawk
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texinfo
-#BuildRequires:	xemacs
 BuildRequires:	psutils
-#Buildrequires:	gv
 
 Requires:	binutils
 Requires:	file
 Requires:	groff-perl
-Requires:	imagemagick 
+Requires:	imagemagick
 Requires:	psutils
-
-#Requires:	gv
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The a2ps filter converts text and other types of files to PostScript(TM).
@@ -81,8 +70,6 @@ This package holds static libraries.
 
 # Ensure the paper size is properly modified upon locale (from fedora)
 %patch3 -p1
-# Ensute the encoding is not hardcoded but deduced from environment (from fedora)
-# %patch4 -p1
 
 # Security enhancement (from fedora)
 %patch5 -p1
@@ -93,29 +80,33 @@ This package holds static libraries.
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
 %find_lang %{name}
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %post
+%if %{mdvver} < 201200
 %_install_info a2ps.info
 %_install_info ogonkify.info
 %_install_info regex.info
+%endif
 # Adapt /usr/share/a2ps/afm/fonts.map to the current system environment
 ( cd %{_datadir}/%{name}/afm/
   ./make_fonts_map.sh > /dev/null 2>&1
   mv -f fonts.map.new fonts.map
 )
 
+%if %{mdvver} < 201200
 %preun
 %_remove_install_info a2ps.info
 %_remove_install_info ogonkify.info
 %_remove_install_info regex.info
+%endif
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -146,7 +137,9 @@ This package holds static libraries.
 %defattr(644,root,root,755)
 %doc ChangeLog
 %{_includedir}/*
-%attr(755,root,root) %{_libdir}/*.la
+%if %{mdvver} < 201200
+%{_libdir}/*.la
+%endif
 
 %files static-devel
 %defattr(644,root,root,755)
