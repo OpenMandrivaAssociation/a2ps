@@ -1,7 +1,7 @@
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
 Version:	4.14
-Release:	14
+Release:	15
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
@@ -9,6 +9,7 @@ Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
 Patch2:		a2ps-4.14-fix-str-fmt.patch
 Patch3:		a2ps-4.14-glibcpaper.patch
+Patch4:		a2ps-4.14-texinfo-5.x.patch
 Patch5:		a2ps-4.14-security.patch
 
 BuildRequires:	bison
@@ -70,6 +71,8 @@ This package holds static libraries.
 
 # Ensure the paper size is properly modified upon locale (from fedora)
 %patch3 -p1
+
+%patch4 -p1 -b .texi~
 
 # Security enhancement (from fedora)
 %patch5 -p1
