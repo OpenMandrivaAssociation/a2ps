@@ -1,7 +1,7 @@
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
 Version:	4.14
-Release:	24
+Release:	25
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
