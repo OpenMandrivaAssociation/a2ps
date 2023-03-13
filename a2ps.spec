@@ -1,16 +1,19 @@
+%global _disable_rebuild_configure 1
+
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
-Version:	4.14
-Release:	31
+Version:	4.15.1
+Release:	1
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
 Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
-Patch2:		a2ps-4.14-fix-str-fmt.patch
-Patch3:		a2ps-4.14-glibcpaper.patch
-Patch4:		a2ps-4.14-texinfo-5.x.patch
-Patch5:		a2ps-4.14-security.patch
+#Patch2:		a2ps-4.14-fix-str-fmt.patch
+#Patch3:		a2ps-4.14-glibcpaper.patch
+#Patch4:		a2ps-4.14-texinfo-5.x.patch
+#Patch5:		a2ps-4.14-security.patch
+Patch2:		a2ps-gnulib-attribute-malloc.patch
 
 BuildRequires:	bison
 BuildRequires:	emacs-bin
@@ -25,6 +28,7 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texinfo
 BuildRequires:	psutils
+BuildRequires:	pkgconfig(bdw-gc)
 
 Requires:	binutils
 Requires:	file
@@ -32,59 +36,27 @@ Requires:	groff-perl
 Requires:	imagemagick
 Requires:	psutils
 
+# The library was never used by anything and is not built anymore either
+Obsoletes:	%{name}-devel < %{EVRD}
+Obsoletes:	%{name}-static-devel < %{EVRD}
+
 %description
 The a2ps filter converts text and other types of files to PostScript(TM).
 a2ps has pretty-printing capabilities and includes support for a wide
 number of programming languages, encodings (ISO Latins, Cyrillic, etc.),
 and medias.
 
-%package devel
-Summary:	Include files for %{name}
-Group:		Development/Other
-Requires(pre):	%{name} = %{version}-%{release}
-
-%description devel
-The a2ps filter converts text and other types of files to PostScript(TM).
-A2ps has pretty-printing capabilities and includes support for a wide
-number of programming languages, encodings (ISO Latins, Cyrillic, etc.),
-and medias.
-
-This package holds include files.
-
-%package static-devel
-Summary:	Static libraries for %{name}
-Group:		Development/Other
-Requires(pre):	%{name}-devel = %{version}-%{release}
-
-%description static-devel
-The a2ps filter converts text and other types of files to PostScript(TM).
-A2ps has pretty-printing capabilities and includes support for a wide
-number of programming languages, encodings (ISO Latins, Cyrillic, etc.),
-and medias.
-
-This package holds static libraries.
-
 %prep
-%setup -q -n %{name}-%{version}
-%patch1 -p1 -b .enable-display
-%patch2 -p0 -b .str
-
-# Ensure the paper size is properly modified upon locale (from fedora)
-%patch3 -p1
-
-%patch4 -p1 -b .texi~
-
-# Security enhancement (from fedora)
-%patch5 -p1
+%autosetup -p1
+%configure --with-encoding=utf-8
 
 %build
-%configure
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
-%find_lang %{name}
+%find_lang %{name} --all-name
 
 %post
 # Adapt /usr/share/a2ps/afm/fonts.map to the current system environment
@@ -117,13 +89,3 @@ This package holds static libraries.
 %{_datadir}/ogonkify/
 %{_datadir}/emacs/site-lisp/a2ps-print.el
 %{_datadir}/emacs/site-lisp/a2ps.el
-%{_datadir}/emacs/site-lisp/*.elc
-
-%files devel
-%defattr(644,root,root,755)
-%doc ChangeLog
-%{_includedir}/*
-
-%files static-devel
-%defattr(644,root,root,755)
-%{_libdir}/*.a

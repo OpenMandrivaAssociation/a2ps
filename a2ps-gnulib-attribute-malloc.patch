@@ -1,0 +1,85 @@
+diff -up a2ps-4.15.1/config.h.in.omv~ a2ps-4.15.1/config.h.in
+--- a2ps-4.15.1/config.h.in.omv~	2023-03-13 22:15:02.355103902 +0100
++++ a2ps-4.15.1/config.h.in	2023-03-13 22:15:09.626149997 +0100
+@@ -1462,7 +1462,7 @@
+    can be freed via 'free'; it can be used only after declaring 'free'.  */
+ /* Applies to: functions.  Cannot be used on inline functions.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if _GL_GNUC_PREREQ (11, 0)
++# if _GL_GNUC_PREREQ (11, 0) && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/lib/dirent.in.h.omv~ a2ps-4.15.1/lib/dirent.in.h
+--- a2ps-4.15.1/lib/dirent.in.h.omv~	2023-03-13 22:16:26.444636412 +0100
++++ a2ps-4.15.1/lib/dirent.in.h	2023-03-13 22:16:31.671669473 +0100
+@@ -59,7 +59,7 @@ typedef struct gl_directory DIR;
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/lib/stdio.in.h.omv~ a2ps-4.15.1/lib/stdio.in.h
+--- a2ps-4.15.1/lib/stdio.in.h.omv~	2023-03-13 22:16:11.964544802 +0100
++++ a2ps-4.15.1/lib/stdio.in.h	2023-03-13 22:16:17.874582197 +0100
+@@ -95,7 +95,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/lib/stdlib.in.h.omv~ a2ps-4.15.1/lib/stdlib.in.h
+--- a2ps-4.15.1/lib/stdlib.in.h.omv~	2023-03-13 22:16:41.564732036 +0100
++++ a2ps-4.15.1/lib/stdlib.in.h	2023-03-13 22:16:56.757828085 +0100
+@@ -103,7 +103,7 @@ struct random_data
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/lib/stdring.in.h.omv~ a2ps-4.15.1/lib/stdring.in.h
+diff -up a2ps-4.15.1/lib/string.in.h.omv~ a2ps-4.15.1/lib/string.in.h
+--- a2ps-4.15.1/lib/string.in.h.omv~	2023-03-13 22:17:04.195875094 +0100
++++ a2ps-4.15.1/lib/string.in.h	2023-03-13 22:17:17.195957236 +0100
+@@ -72,7 +72,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/lib/wchar.in.h.omv~ a2ps-4.15.1/lib/wchar.in.h
+--- a2ps-4.15.1/lib/wchar.in.h.omv~	2023-03-13 22:17:27.751023911 +0100
++++ a2ps-4.15.1/lib/wchar.in.h	2023-03-13 22:17:33.062057454 +0100
+@@ -88,7 +88,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -up a2ps-4.15.1/m4/gnulib-common.m4.omv~ a2ps-4.15.1/m4/gnulib-common.m4
+--- a2ps-4.15.1/m4/gnulib-common.m4.omv~	2023-03-13 22:14:29.960898411 +0100
++++ a2ps-4.15.1/m4/gnulib-common.m4	2023-03-13 22:14:42.885980425 +0100
+@@ -194,7 +194,7 @@ AC_DEFUN([gl_COMMON_BODY], [
+    can be freed via 'free'; it can be used only after declaring 'free'.  */
+ /* Applies to: functions.  Cannot be used on inline functions.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if _GL_GNUC_PREREQ (11, 0)
++# if _GL_GNUC_PREREQ (11, 0) && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
