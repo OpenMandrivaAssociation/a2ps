@@ -9,10 +9,6 @@ Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
 Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
-#Patch2:		a2ps-4.14-fix-str-fmt.patch
-#Patch3:		a2ps-4.14-glibcpaper.patch
-#Patch4:		a2ps-4.14-texinfo-5.x.patch
-#Patch5:		a2ps-4.14-security.patch
 Patch2:		a2ps-gnulib-attribute-malloc.patch
 
 BuildRequires:	bison
@@ -29,6 +25,7 @@ BuildRequires:	tetex-latex
 BuildRequires:	texinfo
 BuildRequires:	psutils
 BuildRequires:	pkgconfig(bdw-gc)
+BuildRequires:	libpaper-devel
 
 Requires:	binutils
 Requires:	file
