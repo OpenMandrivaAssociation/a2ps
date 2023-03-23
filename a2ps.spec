@@ -2,7 +2,7 @@
 
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
-Version:	4.15.1
+Version:	4.15.2
 Release:	1
 License:	GPLv3+
 Group:		Publishing
