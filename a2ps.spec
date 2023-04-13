@@ -2,8 +2,8 @@
 
 Summary:	Converts text and other types of files to PostScript(TM)
 Name:		a2ps
-Version:	4.15.2
-Release:	2
+Version:	4.15.4
+Release:	1
 License:	GPLv3+
 Group:		Publishing
 Url:		http://www.gnu.org/software/a2ps/
@@ -27,7 +27,9 @@ BuildRequires:	psutils
 BuildRequires:	pkgconfig(bdw-gc)
 BuildRequires:	libpaper-devel
 
-Requires:	binutils
+Requires(post):	coreutils
+Requires:	gzip
+Requires:	bzip2
 Requires:	file
 Requires:	groff-perl
 Requires:	imagemagick
@@ -57,10 +59,13 @@ and medias.
 
 %post
 # Adapt /usr/share/a2ps/afm/fonts.map to the current system environment
-( cd %{_datadir}/%{name}/afm/
-  ./make_fonts_map.sh > /dev/null 2>&1
-  mv -f fonts.map.new fonts.map
+(cd %{_datadir}/a2ps/afm;
+ ./make_fonts_map.sh > /dev/null 2>&1 || /bin/true
+ if [ -f fonts.map.new ]; then
+   mv fonts.map.new fonts.map
+ fi
 )
+exit 0
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -69,12 +74,12 @@ and medias.
 %doc AUTHORS NEWS README TODO THANKS
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_datadir}/%{name}/afm/make_fonts_map.sh
-%{_infodir}/a2ps.info*
-%{_infodir}/ogonkify.info*
-%{_infodir}/regex.info*
-%{_mandir}/man1/*
+%doc %{_infodir}/a2ps.info*
+%doc %{_infodir}/ogonkify.info*
+%doc %{_infodir}/regex.info*
+%doc %{_mandir}/man1/*
 %dir %{_datadir}/%{name}/
-%{_datadir}/%{name}/README
+%doc %{_datadir}/%{name}/README
 %dir %{_datadir}/%{name}/afm
 %{_datadir}/%{name}/afm/*.afm
 %{_datadir}/%{name}/afm/*.map
