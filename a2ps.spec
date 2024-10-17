@@ -6,7 +6,7 @@ Version:	4.15.6
 Release:	1
 License:	GPLv3+
 Group:		Publishing
-Url:		http://www.gnu.org/software/a2ps/
+Url:		https://www.gnu.org/software/a2ps/
 Source:		http://ftp.gnu.org/gnu/a2ps/%{name}-%{version}.tar.gz
 Patch1:		a2ps-4.14-enable-display.patch
 Patch2:		a2ps-gnulib-attribute-malloc.patch
